@@ -1,0 +1,37 @@
+0.16a
+-----
+
+Fix segfault if e=0
+Add possibility of reporting spglib version number
+
+0.15 to 0.16
+------------
+
+Use spg_get_dataset() for international symbol & symmetry ops -- makes
+  these consistent at the same tolerance
+Accept ranges in -e=
+
+0.14 to 0.15
+------------
+
+Added man page and GPL
+Added symmetry description output to cell files as comments
+First version in any sense released
+
+0.12 to 0.14
+------------
+
+Shelx TITL and cell #titl read, preserved and regarded as equivalent.
+; treated as comment in cell file.
+
+0.11 to 0.12
+------------
+
+Shelx reader completely re-written, and airss output added.
+
+0.1 to 0.11
+-----------
+
+Ability to read shelx files added
+Better algorithm for singular 1-R matrices from proper rotations
+

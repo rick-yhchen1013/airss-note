@@ -1,0 +1,119 @@
+.TH cellsym 1
+.SH NAME
+cellsym - identifies symmetry operations in cell, shelx or pdb file,
+
+.SH SYNOPSIS
+.B cellsym
+[-v] [-e=tol] [--OPTIONS] [--FORMAT] infile [outfile]
+
+.SH DESCRIPTION
+
+.B cellsym
+is a command-line wrapper for the spglib library for finding symmetry
+operations in a crystal. It can read and write (and convert between) cell,
+shelx and pdb files.
+
+,LP
+Input is assumed to be in the cell format unless the input file name ends
+'.pdb' or '.res'.
+
+.SH OPTIONS
+
+.LP
+.TP
+.B \-e=tol
+set tolerance to tol, e.g. 1e-3.
+.LP
+.TP
+.B \-\-int
+call spg_get_international(), and print resulting symbol.
+.TP
+.B \-\-list
+call spg_get_symmetry() and list results.
+.TP
+.B \-\-point
+call spg_get_symmetry() followed by spg_get_pointgroup(), and report result.
+.TP
+.B \-\-primitive
+call spg_find_primitive(), and thus find primitive cell.
+.TP
+.B \-\-refine
+call spg_refine_cell(), which adjusts the cell to make it fit exactly with
+symmetry found.
+.TP
+.B \-\-schoen
+call spg_get_schoenflies(), and print resulting symbol.
+.TP
+.B \-\-symmetry
+call spg_get_symmetry()
+
+.LP
+If multiple operations are specified, the order in which they are called is
+primitive, refine, int, schoen, symmetry, list, point.
+
+.SH FORMATS
+
+.TP
+.B \-\-cell
+CASTEP .cell, cartesian cell, fractional co-ordinates. The output contains
+just the lattice and positions blocks, so is not a valid input to CASTEP, but
+can easily be made so.
+.TP
+.B \-\-cell_abc
+CASTEP .cell, abc cell, fractional co-ordinates.
+.TP
+.B \-\-cell_abs
+CASTEP .cell, cartesian cell, absolute co-ordinates.
+.TP
+.B \-\-cell_abc_abs
+CASTEP .cell, abc cell, absolute co-ordinates.
+.TP
+.B \-\-null
+Null output. Throw away all output, but still write some useful information
+from the input to stderr.
+.TP
+.B \-\-pdb
+PDB
+.TP
+.B \-\-pdbn
+PDB, but label the atoms with element symbol and number within that species,
+e.g. C8, H24, Ca2, rather than just with element symbol. The whole string
+can contain no more than four characters, so * is used for the numeric part
+if it would not otherwise fit.
+.TP
+.B \-\-shelx
+SHELX97
+
+.LP
+If
+.B \-v
+is specified, the cell output will include comments which describe the
+symmetry operations.
+
+.SH NOTES
+
+.LP
+If no operation is given, the program will simply convert between different
+file formats.
+
+.LP
+Details of the operation of spglib can be found at
+http://spglib.sourceforge.net/ This simple wrapper does not currently give
+access to any of the k-point functionality of spglib.
+
+.LP
+A symmetry operation of a -2 rotation is, of course, a mirror plane. If there
+is a component of the accompanying translation within the plane then it is a
+glide plane. The axis given for 1 and -1 rotations is, of course, irrelevant.
+
+.SH LICENCES etc
+
+The licence for spglib is New BSD. That of the cellsym wrapper is GPL version
+2.
+
+The author of cellsym makes no claim that his code is fit for any purpose and
+provides no form of warranty. He has no connection with the author(s) of spglib.
+
+.SH BUGS
+
+Please report to mjr19@ (obvious University domain).
