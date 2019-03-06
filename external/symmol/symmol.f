@@ -18,9 +18,9 @@ c________________________________________________________________________
 c if you want address all the output on the standard output, suppress the two
 c sequent instruction and activate the third
 c
-      out=9
-      OPEN(9,file='symmol.out')
-c     out=6
+c      out=9
+c      OPEN(9,file='symmol.out')
+      out=6
 c________________________________________________________________________
       if(out.eq.9)then
         write(*,*)'                  ============'
@@ -328,7 +328,7 @@ c     REAL a,b,d,e,etemp,fu,fv,fw,fx,p,q,r,tol1,tol2,u,v,w,x,xm
           endif
         endif
 11    continue
-      pause 'brent exceed maximum iterations'
+      stop 'brent exceed maximum iterations'
 3     xmin=x
       brent=fx
       return
@@ -2458,7 +2458,7 @@ c     write(OUT,*)'NMS,MV',NMS,MV
       com=-com
       call azzera(AA,0.d0,9)
       go to 1355
-di ognuna di queste quattro  matrici fare l'equivalente con -z!!!!!
+c     di ognuna di queste quattro  matrici fare l'equivalente con -z!!!!!
  1360 continue
  1370 continue
       go to 2500
@@ -2620,7 +2620,7 @@ C se ha gia' modificato una volta i pesi non li modifica ulteriormente
 C ma riduce la tolleranza accettata fra i momenti di inerzia per il
 calcolo della degenerazione
         if(porig.ne.PESO(1))then
-          deliner=deliner*0.1d0
+          deliner=deliner*0.01d0
           go to 460
         endif
 C 
