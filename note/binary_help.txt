@@ -1,0 +1,97 @@
+* airss.pl 
+
+      .o.       ooooo ooooooooo.    .oooooo..o  .oooooo..o 
+     .888.      '888' '888   'Y88. d8P'    'Y8 d8P'    'Y8 
+    .8:888.      888   888   .d88' Y88bo.      Y88bo.      
+   .8' '888.     888   888ooo88P'   ':Y8888o.   ':Y8888o.  
+  .88ooo8888.    888   888'88b.         ':Y88b      ':Y88b 
+ .8'     '888.   888   888  '88b.  oo     .d8P oo     .d8P 
+o88o     o8888o o888o o888o  o888o 8::88888P'  8::88888P'  
+                                                           
+          Ab Initio Random Structure Searching             
+          Chris J. Pickard   (cjp20@cam.ac.uk)            
+                 Copyright (c) 2005-2018                   
+                                                           
+Please cite the following:                                 
+                                                           
+[1] C.J. Pickard and R.J. Needs, PRL 97, 045504 (2006)     
+[2] C.J. Pickard and R.J. Needs, JPCM 23, 053201 (2011)    
+
+Usage: airss.pl [-pressure] [-build] [-pp0] [-pp3] [-gulp] [-lammps] [-gap] [-psi4] [-cluster] [-slab] [-dos] [-workdir] [-max] [-num] [-amp] [-mode] [-minmode] [-sim] [-symm] [-nosymm] [-mpinp] [-steps] [-best] [-track] [-keep] [-seed]
+       -pressure f  Pressure (0.0)
+       -build       Build structures only (false)
+       -pp0         Use pair potentials rather than Castep (0D) (false)
+       -pp3         Use pair potentials rather than Castep (3D) (false)
+       -gulp        Use gulp rather than Castep (false)
+       -lammps      Use LAMMPS rather than Castep (false)
+       -gap         Use GAP through QUIP/QUIPPY/ASE (false)
+       -ps4         Use psi4 (false)
+       -vasp        Use VASP (false)
+       -cluster     Use cluster settings for symmetry finder (false)
+       -slab        Use slab settings (false)
+       -dos         Calculate DOS at Ef (false)
+       -workdir  s  Work directory ('.')
+       -max      n  Maximum number of structures (1000000)
+       -num      n  Number of trials (0)
+       -amp      f  Amplitude of move (-1.5)
+       -mode        Choose moves based on low lying vibrational modes (false)
+       -minmode  n  Lowest mode (4)
+       -sim      f  Threshold for structure similarity (0.0)
+       -symm     f  Symmetrise on-the-fly (0.0)
+       -nosymm   f  No symmetry (0)
+       -mpinp    n  Number of cores per mpi Castep (0)
+       -steps    n  Max number of geometry optimisation steps (400)
+       -best        Only keep the best structures for each composition (false)
+       -track       Keep the track of good structures during relax and shake (false)
+       -keep        Keep intermediate files (false)
+       -seed     s  Seedname ('NONE')
+
+* buildcell --help
+Usage: buildcell < in.cell > out.cell
+
+* castep_relax 
+Usage: castep_relax <maxit> <exe> <sim> <symm> <seed>
+
+* cellsym --help
+Usage: cellsym [-vV] [-e=eps] [--FORMAT] --OPERATION infile [outfile]
+
+-e=eps       set tolerance for finding symmetries. Default=0.0001
+-v           be verbose (may be repeated)
+-V           print version number and exit
+
+OPERATION is one of:
+   primitive      call spg_find_primitive()
+   refine         call spg_refine_cell()
+   int            call spg_get_dataset() and report international symbol
+   schoen         call spg_get_schoenflies()
+   symmetry       call spg_get_dataset() and keep symmetry ops
+   list           call spg_get_dataset() and list symmetry ops
+   point          call spg_get_dataset() followed by spg_get_pointgroup()
+
+FORMAT is one of: cell      CASTEP .cell, cartesian and fractional
+                  cell_abc                abc and fractional
+                  cell_abs                cartesian and absolute
+                  cell_abc_abs            abc and absolute
+                  pdb       PDB
+                  pdbn      PDB with atoms numbered
+                  shelx     SHELX97
+                  airss     not SHELX97
+
+Multiple operations may be specified. The order in which they will
+be applied is the order in which they are listed above, not the
+order on the command line.
+
+cellsym version 0.16a (c) 2012-2016 MJR, symmetry information from libspg.
+
+* castep2res
+Usage: castep2res [cluster] <seedname>
+
+* cabal
+Usage: cabal in out [x] < seed.in > seed.out
+  in==out : Niggli reduce
+  supports castep+,cell,shx,res,gulp*,cif*,psi4*,xtl,xyz(e),config+,poscar
+  *output only +input only
+
+  x : for xyz input, pad unit cell with x
+
+
